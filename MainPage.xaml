@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sample="clr-namespace:ImageButtonSample"
+             x:Class="ImageButtonSample.MainPage"
+             BindingContext="{x:Static sample:ImageButtonSampleViewModel.Instance}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <sample:LockStateToImageConverter x:Key="cnvLockStateToImage" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout 
+            Grid.Row="0"
+             Orientation="Horizontal">
+            
+            <ImageButton              
+                Command="{Binding ToggleLockStateCommand}"
+                BackgroundColor="LightGray"
+                Padding="4"
+                Source="{Binding Locked, Converter={StaticResource cnvLockStateToImage}}">
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.9"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+
+            <Button
+            IsEnabled="{Binding Locked}"
+			HorizontalOptions="FillAndExpand"
+			VerticalOptions="FillAndExpand"
+			FontSize="Medium"
+			Text="Press me"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
